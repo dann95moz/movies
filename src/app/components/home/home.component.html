@@ -1,0 +1,66 @@
+<div class="sorters">
+  <ng-container *ngIf="moviesList | async as movies; else loading">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Sort By Title</mat-label>
+        <mat-select
+          [(ngModel)]="titleSort"
+          (ngModelChange)="sortByTitle($event)"
+        >
+          <mat-option value="asc">Ascendant</mat-option>
+          <mat-option value="desc">Descendant</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Sort By Release Date</mat-label>
+        <mat-select
+          [(ngModel)]="dateSort"
+          (ngModelChange)="sortByRelease($event)"
+        >
+          <mat-option value="asc">Ascendant</mat-option>
+          <mat-option value="desc">Descendant</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="card-container">
+      <mat-card
+        tabindex="0"
+        *ngFor="let movie of movies; let i = index"
+        class="card"
+        [ngStyle]="{
+          'background-image': 'url(' + movie.image + ')',
+          'background-size': 'cover'
+        }"
+      >
+        <div
+          [routerLink]="['/details', movie.Title]"
+          [state]="{ data: movie }"
+          class="inner-card"
+        >
+          <mat-card-header
+            class="card-header"
+            [ngClass]="{ isFavorite: favorites[i] }"
+          >
+            <span class="favorite-tag" *ngIf="favorites[i]">
+              On my watch List</span
+            >
+            <button
+              mat-mini-fab
+              color="warn"
+              (click)="toggleFavorite(i); $event.stopPropagation()"
+            >
+              <mat-icon>{{
+                !favorites[i] ? "favorite_border" : "favorite"
+              }}</mat-icon>
+            </button>
+          </mat-card-header>
+          <mat-card-footer class="footer"> {{ movie.Title }}</mat-card-footer>
+        </div>
+      </mat-card>
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+</div>

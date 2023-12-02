@@ -1,0 +1,22 @@
+<mat-card class="details-card" *ngIf="movie">
+  <mat-card-content class="card-content">
+    <h2>{{ movie.Title }}</h2>
+    <div class="content">
+      <div class="text-container">
+        <p>Description: {{ movie.Description }}</p>
+        <p>Duration: {{ movie.Duration }}</p>
+        <p>Genre: {{ movie.Genre }}</p>
+        <p>Release date {{ movie["Released date"] | date }}</p>
+      </div>
+      <img src="{{ movie.image }}" alt="" class="detail-img" />
+    </div>
+    <iframe
+      width="560"
+      height="315"
+      [src]="getSafeUrl(movie['Trailer Link'])"
+      frameborder="0"
+      allowfullscreen
+      class="i-frame"
+    ></iframe>
+  </mat-card-content>
+</mat-card>

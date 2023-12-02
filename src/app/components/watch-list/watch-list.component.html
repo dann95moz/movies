@@ -1,0 +1,26 @@
+<div class="sorters">
+  <ng-container *ngIf="moviesList | async as movies; else loading">
+    <div class="card-container">
+      <mat-card
+        *ngFor="let movie of movies; let i = index"
+        class="card"
+        [routerLink]="['/details', movie.Title]"
+        [state]="{ data: movie }"
+        [ngStyle]="{
+          'background-image': 'url(' + movie.image + ')',
+          'background-size': 'cover'
+        }"
+      >
+        <mat-card-content
+          class="card-header"
+          [ngClass]="{ isFavorite: favorites[i] }"
+        >
+        </mat-card-content>
+        <mat-card-footer class="footer"> {{ movie.Title }}</mat-card-footer>
+      </mat-card>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+</div>
